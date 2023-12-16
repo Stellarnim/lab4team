@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow">
+  <object class="GtkWindow" id="chat_window">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="default_width">440</property>
@@ -16,6 +16,19 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="baseline_position">top</property>
+        <child>
+          <object class="GtkEntry" id="usname">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="editable">False</property>
+            <property name="caps_lock_warning">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
         <child>
           <object class="GtkMenuBar">
             <property name="visible">True</property>
@@ -181,7 +194,7 @@
             <property name="orientation">vertical</property>
             <property name="spacing">2</property>
             <child>
-              <object class="GtkTextView" id="reciever">
+              <object class="GtkTextView" id="chat_display">
                 <property name="width_request">-1</property>
                 <property name="height_request">250</property>
                 <property name="visible">True</property>
@@ -214,12 +227,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="send">
                     <property name="label" translatable="yes">send</property>
                     <property name="name">send</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_send_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -260,10 +274,30 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <placeholder/>
+              <object class="GtkButton" id="Ok">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -273,54 +307,74 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkSearchEntry">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="primary_icon_name">edit-find-symbolic</property>
+            <property name="primary_icon_activatable">False</property>
+            <property name="primary_icon_sensitive">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
     </child>
   </object>
   <object class="GtkApplicationWindow" id="main_window">
-    <property name="name">Chat Service</property>
-    <property name="width_request">400</property>
-    <property name="height_request">200</property>
+    <property name="width_request">380</property>
+    <property name="height_request">100</property>
     <property name="can_focus">False</property>
     <child type="titlebar">
       <placeholder/>
     </child>
     <child>
-      <object class="GtkBox">
+      <object class="GtkLayout">
+        <property name="width_request">200</property>
+        <property name="height_request">100</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="homogeneous">True</property>
+        <property name="width">200</property>
         <child>
-          <object class="GtkButton" id="chat">
-            <property name="label" translatable="yes">Chat</property>
-            <property name="width_request">200</property>
-            <property name="height_request">200</property>
+          <object class="GtkEntry" id="chatname">
+            <property name="width_request">168</property>
+            <property name="height_request">34</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="relief">half</property>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="x">77</property>
+            <property name="y">30</property>
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="Regist">
-            <property name="label" translatable="yes">Regist</property>
-            <property name="width_request">200</property>
-            <property name="height_request">200</property>
+          <object class="GtkLabel">
+            <property name="width_request">50</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Name</property>
+          </object>
+          <packing>
+            <property name="x">24</property>
+            <property name="y">30</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="submit">
+            <property name="label" translatable="yes">submit</property>
+            <property name="width_request">50</property>
+            <property name="height_request">30</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="relief">half</property>
+            <signal name="clicked" handler="on_submit_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="x">263</property>
+            <property name="y">30</property>
           </packing>
         </child>
       </object>
